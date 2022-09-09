@@ -19,8 +19,20 @@ class categoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        // SELECT a.*, b.name as parent_name
+        // FROM categories as a
+        // LEFT JOIN categories as b ON b.id = a.parent_id
+        $request = request();
+        $categories = Category::leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
+            ->select([
+                'categories.*',
+                'parents.name as parent_name'
+            ])
+            ->filter($request->query())
+            ->orderBy('categories.name')
+            ->paginate();
         return view('admin.categories.index', compact('categories'));
+
     }
 
     /**
@@ -131,9 +143,9 @@ class categoriesController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
-        if ($category->image) {
-            Storage::disk('public')->delete($category->image);
-        }
+//        if ($category->image) {
+//            Storage::disk('public')->delete($category->image);
+//        }
 //        Category::destroy($id);
         return Redirect::route('admin.categories.index')->with('deleted', 'Category Delete');
 
@@ -149,5 +161,28 @@ class categoriesController extends Controller
             'disk' => 'public'
         ]);
         return $path;
+    }
+
+    public function trash()
+    {
+        $categories = Category::onlyTrashed()->orderBy('name')->paginate();
+        return view('admin.categories.trash', compact('categories'));
+    }
+
+    public function restore(Request $request, $id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+        return redirect()->route('admin.categories.trash')->with(['success' => 'Category restored']);
+    }
+
+
+    public function forceDelete($id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->forceDelete();
+        if ($category->image)
+            Storage::disk('public')->delete($category->image);
+        return redirect()->route('admin.categories.trash')->with(['success' => 'Category deleted for ever']);
     }
 }

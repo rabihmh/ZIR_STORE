@@ -10,5 +10,9 @@ Route::get('/dash', function () {
 
 Route::group(['middleware' => ['auth'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('categories/trash', [categoriesController::class, 'trash'])->name('categories.trash');
+    Route::put('categories/{category}/restore', [categoriesController::class, 'restore'])->name('categories.restore');
+    Route::delete('categories/{category}/force-delete', [categoriesController::class, 'forceDelete'])->name('categories.force-delete');
+
     Route::resource('categories', categoriesController::class);
 });

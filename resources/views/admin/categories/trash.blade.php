@@ -1,15 +1,12 @@
 @extends('layouts.dashboard')
 @section('title-page','admin')
-@section('title','Categories')
+@section('title','Trashed Categories')
 
 @section('content')
 
     <div class="mb-5">
-        <a href="{{route('admin.categories.create')}}" class="btn btn-sm btn-outline-primary mx-auto">Add Category</a>
-        <a href="{{route('admin.categories.trash')}}" class="btn btn-sm btn-outline-primary">Trashed Category</a>
-
+        <a href="{{route('admin.categories.index')}}" class="btn btn-sm btn-outline-primary">Back</a>
     </div>
-
     @if(session()->has('deleted'))
         <div class="alert alert-danger">
             {{session('deleted')}}
@@ -34,9 +31,8 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Parent</th>
             <th>Status</th>
-            <th>Created At</th>
+            <th>Deleted At</th>
             <th>Image</th>
             <th colspan="2">Options</th>
         </tr>
@@ -50,20 +46,23 @@
             <tr>
                 <td>{{$i+=1}}</td>
                 <td>{{$category->name}}</td>
-                <td>{{$category->parent_name}}</td>
                 <td>{{$category->status}}</td>
-                <td>{{$category->created_at}}</td>
+                <td>{{$category->deleted_at}}</td>
                 <td><img src="{{asset('storage/'.$category->image)}}" alt="" height="50"></td>
                 <td>
-                    <a href="{{route('admin.categories.edit',$category->id)}}" class="btn btn-sm btn-outline-success">Edit</a>
+                    <form action="{{route('admin.categories.restore',$category->id)}}" method="post">
+                        {{csrf_field()}}
+
+                        @method('put')
+                        <button type="submit" class="btn btn-sm btn-outline-success">Restore</button>
+                    </form>
                 </td>
                 <td>
-                    <form action="{{route('admin.categories.destroy',$category->id)}}" method="post">
+                    <form action="{{route('admin.categories.force-delete',$category->id)}}" method="post">
                     {{csrf_field()}}
-                    <!--Form method spoofing-->
-                        {{--<input type="hidden" name="_method" value="delete">--}}
+
                         @method('delete')
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Force Delete</button>
                     </form>
                 </td>
             </tr>
