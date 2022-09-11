@@ -1,12 +1,12 @@
 @extends('layouts.dashboard')
 @section('title-page','admin')
-@section('title','Categories')
+@section('title','Products')
 
 @section('content')
 
     <div class="mb-5">
-        <a href="{{route('admin.categories.create')}}" class="btn btn-sm btn-outline-primary mx-auto">Add Category</a>
-        <a href="{{route('admin.categories.trash')}}" class="btn btn-sm btn-outline-primary">Trashed Category</a>
+        <a href="{{route('admin.products.create')}}" class="btn btn-sm btn-outline-primary mx-auto">Add Category</a>
+        {{--        <a href="{{route('admin.products.trash')}}" class="btn btn-sm btn-outline-primary">Trashed Category</a>--}}
 
     </div>
 
@@ -34,9 +34,9 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Parent</th>
+            <th>Category</th>
+            <th>Store</th>
             <th>Status</th>
-            <th>Number of products</th>
             <th>Created At</th>
             <th>Image</th>
             <th colspan="2">Options</th>
@@ -46,21 +46,23 @@
         @php
             $i=0;
         @endphp
-        @forelse($categories as $category)
+        @forelse($products as $product)
 
             <tr>
                 <td>{{$i+=1}}</td>
-                <td><a href="{{route('admin.categories.show',$category->id)}}">{{$category->name}}</a></td>
-                <td>{{$category->parent->name}}</td>
-                <td>{{$category->status}}</td>
-                <td>{{$category->count}}</td>
-                <td>{{$category->created_at}}</td>
-                <td><img src="{{asset('storage/'.$category->image)}}" alt="" height="50"></td>
+                <td>{{$product->name}}</td>
+                <td>{{$product->category->name}}</td>
+                <td>{{$product->store->name}}</td>
+                <td>{{$product->status}}</td>
+
+                <td>{{$product->created_at}}</td>
+                <td><img src="{{asset('storage/'.$product->image)}}" alt="" height="50"></td>
                 <td>
-                    <a href="{{route('admin.categories.edit',$category->id)}}" class="btn btn-sm btn-outline-success">Edit</a>
+                    <a href="{{route('admin.products.edit',$product->id)}}"
+                       class="btn btn-sm btn-outline-success">Edit</a>
                 </td>
                 <td>
-                    <form action="{{route('admin.categories.destroy',$category->id)}}" method="post">
+                    <form action="{{route('admin.products.destroy',$product->id)}}" method="post">
                     {{csrf_field()}}
                     <!--Form method spoofing-->
                         {{--<input type="hidden" name="_method" value="delete">--}}
@@ -71,12 +73,12 @@
             </tr>
         @empty
             <tr>
-                <td class="text-center text-danger text-lg text-bold" colspan="9">No categories defined</td>
+                <td class="text-center text-danger text-lg text-bold" colspan="9">No products defined</td>
             </tr>
         @endforelse
         </tbody>
     </table>
     <div class="text-center">
-        {{$categories->withQueryString()->links()}}
+        {{$products->links()}}
     </div>
 @endsection

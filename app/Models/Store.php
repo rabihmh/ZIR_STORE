@@ -18,4 +18,9 @@ class Store extends Model
     public $incrementing = true;//true by default, (Indicates if the IDs are auto-incrementing)
     public $timestamps = true;
 
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'store_id', 'id');
+
+    }
 }

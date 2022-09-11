@@ -1,13 +1,18 @@
-{{--@props([--}}
-{{--'type'=>'text','name','value'=>'','label'--}}
-{{--])--}}
+@props([
+'name', 'value' => '', 'label' => false
+])
 
-<label for="">{{$label}}</label>
+@if($label)
+    <label for="">{{ $label }}</label>
+@endif
 
-<textarea name="{{$name}}"
-          @class(['form-control','is-invalid'=>$errors->has($name)])>{{old($name,$value)}}</textarea>
-@error($name)
-<div class="invalid-feedback">
-    {{$message}}
-</div>
-@enderror
+<textarea
+    name="{{ $name }}"
+    {{ $attributes->class([
+        'form-control',
+        'is-invalid' => $errors->has($name)
+    ]) }}
+>{{ old($name, $value) }}</textarea>
+
+<x-form.validation-feedback :name="$name"/>
+Footer

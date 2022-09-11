@@ -9,18 +9,16 @@ class Nav extends Component
 {
     public $items;
     public $active;
-    public $name;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($name)
+    public function __construct($context = 'side')
     {
         $this->items = config('nav');
         $this->active = Route::currentRouteName();
-        $this->name = $name;
     }
 
     /**

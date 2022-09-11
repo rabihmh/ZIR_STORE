@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ccbd816a07b206f971042295b899d1ba",
+    "content-hash": "9685f8971b1f7591911747e9a2c8a6c7",
     "packages": [
         {
             "name": "brick/math",
@@ -3534,6 +3534,86 @@
             "time": "2022-08-26T14:45:39+00:00"
         },
         {
+            "name": "symfony/intl",
+            "version": "v6.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/intl.git",
+                "reference": "2ef7cb9af5ad4c3e2d7674326982366ad9dfef86"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/intl/zipball/2ef7cb9af5ad4c3e2d7674326982366ad9dfef86",
+                "reference": "2ef7cb9af5ad4c3e2d7674326982366ad9dfef86",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.2"
+            },
+            "require-dev": {
+                "symfony/filesystem": "^5.4|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Intl\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                },
+                {
+                    "name": "Eriksen Costa",
+                    "email": "eriksen.costa@infranology.com.br"
+                },
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides a PHP replacement layer for the C intl extension that includes additional data from the ICU library",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "i18n",
+                "icu",
+                "internationalization",
+                "intl",
+                "l10n",
+                "localization"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/intl/tree/v6.0.8"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-04-12T16:11:42+00:00"
+        },
+        {
             "name": "symfony/mailer",
             "version": "v6.0.12",
             "source": {
@@ -5571,6 +5651,109 @@
                 "source": "https://github.com/laravel/sail"
             },
             "time": "2022-08-17T13:17:15+00:00"
+        },
+        {
+            "name": "mbezhanov/faker-provider-collection",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mbezhanov/faker-provider-collection.git",
+                "reference": "ae3a9ba9421c3a593836689f08da1443b4065bc0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mbezhanov/faker-provider-collection/zipball/ae3a9ba9421c3a593836689f08da1443b4065bc0",
+                "reference": "ae3a9ba9421c3a593836689f08da1443b4065bc0",
+                "shasum": ""
+            },
+            "require": {
+                "fakerphp/faker": "^1.13",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "php-mock/php-mock": "^2.3",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bezhanov\\Faker\\": "src/Faker"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marin Bezhanov",
+                    "email": "marin.bezhanov@gmail.com",
+                    "homepage": "http://marinbezhanov.com"
+                }
+            ],
+            "description": "A collection of custom providers for the Faker library",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures"
+            ],
+            "support": {
+                "issues": "https://github.com/mbezhanov/faker-provider-collection/issues",
+                "source": "https://github.com/mbezhanov/faker-provider-collection/tree/2.0.1"
+            },
+            "time": "2021-03-12T06:57:05+00:00"
+        },
+        {
+            "name": "mbezhanov/laravel-faker-provider-collection",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mbezhanov/laravel-faker-provider-collection.git",
+                "reference": "6d7030654d38b525d3946e9ba973931f5b21316e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mbezhanov/laravel-faker-provider-collection/zipball/6d7030654d38b525d3946e9ba973931f5b21316e",
+                "reference": "6d7030654d38b525d3946e9ba973931f5b21316e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.1|^6.0|^7.0|^8.0|^9.0",
+                "mbezhanov/faker-provider-collection": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bezhanov\\Faker\\Laravel\\FakerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bezhanov\\Faker\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marin Bezhanov",
+                    "email": "marin.bezhanov@gmail.com"
+                }
+            ],
+            "description": "A collection of custom Faker providers for your Laravel applications",
+            "keywords": [
+                "faker",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/mbezhanov/laravel-faker-provider-collection/issues",
+                "source": "https://github.com/mbezhanov/laravel-faker-provider-collection/tree/2.1.0"
+            },
+            "time": "2022-05-23T04:31:52+00:00"
         },
         {
             "name": "mockery/mockery",
