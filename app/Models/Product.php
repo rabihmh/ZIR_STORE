@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Models\Scopes\Storescope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -38,4 +40,31 @@ class Product extends Model
             'id',//PK related model
         );
     }
+
+    public function scopeActive(Builder $builder)
+    {
+        $builder->where('status', '=', 'active');
+    }
+
+    //Accessors
+    public function getImageUrlAttribute()
+    {
+        if (!$this->image) {
+            return asset('defaultProduct.jpg');
+        }
+        if (Str::startsWith($this->image, ['http://', 'https://'])) {
+            return $this->image;
+        }
+        return asset('storage/' . $this->image);
+    }
+
+    public function getSalePercentageDiscountAttribute()
+    {
+        if (!$this->compare_price) {
+            return 0;
+        }
+
+        return round(100 * $this->price / $this->compare_price, 1) - 100. . '%';
+    }
+
 }
