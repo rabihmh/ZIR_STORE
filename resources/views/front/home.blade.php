@@ -1,4 +1,4 @@
-<x-front-layout>
+<x-front-layout title="Zir_Store">
     <x-slot:allCategories>
         <div class="mega-category-menu">
             <span class="cat-button"><i class="lni lni-menu"></i>All Categories</span>

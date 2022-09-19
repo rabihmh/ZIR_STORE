@@ -13,6 +13,12 @@
     </div>
     <div class="product-info">
         <span class="category">{{$product->category->name}}</span>
+        <!--***************************************-->
+        <span class="category">quantity{{$product->quantity}}</span>
+        <span class="category">ID:{{$product->id}}</span>
+        <span class="category">store_id:{{$product->store->id}}</span>
+        <!--***************************************-->
+
         <h4 class="title">
             <a href="{{route('products.show',$product->slug)}}">{{$product->name}}</a>
         </h4>

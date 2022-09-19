@@ -30,6 +30,7 @@ class ProductFactory extends Factory
             'category_id' => Category::inRandomOrder()->first()->id,
             'feature' => rand(0, 1),
             'store_id' => Store::inRandomOrder()->first()->id,
+            'quantity' => $this->faker->randomDigitNot(0),
         ];
     }
 }

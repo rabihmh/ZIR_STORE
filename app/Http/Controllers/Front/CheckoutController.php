@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Events\OrderCreate;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -30,6 +31,8 @@ class CheckoutController extends Controller
     public function store(Request $request, CartRepository $cart)
     {
         $request->validate([
+            //'addr.billing.first_name'=>['required','string','max:255']
+            //'addr.billing.*' => ['required']
         ]);
 
         $items = $cart->get()->groupBy('products.store_id')->all();
@@ -57,13 +60,14 @@ class CheckoutController extends Controller
                     $order->addresses()->create($address);
                 }
             }
-            $cart->empty();
             DB::commit();
+            //event('order.created', $order, Auth::id());
+            event(new OrderCreate($order));
         } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
-        return redirect()->route('home')->with(['success' => 'Order completed']);
+       // return redirect()->route('home')->with(['success' => 'Order completed']);
     }
 
 }
