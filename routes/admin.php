@@ -10,10 +10,10 @@ Route::get('/dash', function () {
     return view('dashboard');
 })->middleware(['auth']);//return view  default dashboard of breeze authentication
 
-Route::group(['middleware' => ['auth','auth.type:admin,super_admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
+Route::group(['middleware' => ['auth:admin'], 'as' => 'admin.', 'prefix' => 'admin/dashboard'], function () {
     Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('categories/trash', [categoriesController::class, 'trash'])->name('categories.trash');
     Route::put('categories/{category}/restore', [categoriesController::class, 'restore'])->name('categories.restore');
     Route::delete('categories/{category}/force-delete', [categoriesController::class, 'forceDelete'])->name('categories.force-delete');
