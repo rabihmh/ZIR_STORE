@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->float('compare_price')->nullable();
             $table->json('options')->nullable();
             $table->float('rating')->default(0);
-            $table->boolean('feature');
+            $table->boolean('feature')->default(0);
             $table->enum('status', ['active', 'draft', 'archive'])->default('active');
             $table->timestamps();
             $table->softDeletes();

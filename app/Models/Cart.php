@@ -18,6 +18,7 @@ class Cart extends Model
         'cookie_id', 'user_id', 'product_id', 'quantity', 'options'
     ];
 
+
     public static function booted()
     {
         static::observe(CartObserver::class);
