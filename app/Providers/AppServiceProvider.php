@@ -5,6 +5,9 @@ namespace App\Providers;
 use App\Services\CurrencyConverter;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -34,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
             return !(in_array(strtolower($value), $params));
         }, 'This name is prohibited!');
         Paginator::useBootstrapFour();
+
     }
 }
