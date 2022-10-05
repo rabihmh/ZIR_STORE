@@ -5,7 +5,10 @@
 @section('content')
 
     <div class="mb-5">
-        <a href="{{route('admin.categories.create')}}" class="btn btn-sm btn-outline-primary mx-auto">Add Category</a>
+        @if(Auth::user()->can('categories.create'))
+            <a href="{{route('admin.categories.create')}}" class="btn btn-sm btn-outline-primary mx-auto">Add
+                Category</a>
+        @endif
         <a href="{{route('admin.categories.trash')}}" class="btn btn-sm btn-outline-primary">Trashed Category</a>
 
     </div>
@@ -56,18 +59,23 @@
                 <td>{{$category->count}}</td>
                 <td>{{$category->created_at}}</td>
                 <td><img src="{{asset('storage/'.$category->image)}}" alt="" height="50"></td>
-                <td>
-                    <a href="{{route('admin.categories.edit',$category->id)}}" class="btn btn-sm btn-outline-success">Edit</a>
-                </td>
-                <td>
-                    <form action="{{route('admin.categories.destroy',$category->id)}}" method="post">
-                    {{csrf_field()}}
-                    <!--Form method spoofing-->
-                        {{--<input type="hidden" name="_method" value="delete">--}}
-                        @method('delete')
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                    </form>
-                </td>
+                @can('categories.update')
+                    <td>
+                        <a href="{{route('admin.categories.edit',$category->id)}}"
+                           class="btn btn-sm btn-outline-success">Edit</a>
+                    </td>
+                @endcan
+                @can('categories.delete')
+                    <td>
+                        <form action="{{route('admin.categories.destroy',$category->id)}}" method="post">
+                        {{csrf_field()}}
+                        <!--Form method spoofing-->
+                            {{--<input type="hidden" name="_method" value="delete">--}}
+                            @method('delete')
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                @endcan
             </tr>
         @empty
             <tr>
@@ -77,6 +85,6 @@
         </tbody>
     </table>
     <div class="text-center">
-        {{$categories->withQueryString()->links()}}
+        {{$categories->withQueryString()->appends(['search'=>1])->links()}}
     </div>
 @endsection

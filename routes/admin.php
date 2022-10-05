@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminsController;
 use App\Http\Controllers\Admin\categoriesController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\RolesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dash', function () {
@@ -18,8 +20,13 @@ Route::group(['middleware' => ['auth:admin'], 'as' => 'admin.', 'prefix' => 'adm
     Route::put('categories/{category}/restore', [categoriesController::class, 'restore'])->name('categories.restore');
     Route::delete('categories/{category}/force-delete', [categoriesController::class, 'forceDelete'])->name('categories.force-delete');
 
-    Route::resource('categories', categoriesController::class);
-    Route::resource('products', ProductsController::class);
+    Route::resources([
+        'categories' => categoriesController::class,
+        'products' => ProductsController::class,
+        'roles' => RolesController::class,
+        'admins' => AdminsController::class,
+
+    ]);
 
 
 });

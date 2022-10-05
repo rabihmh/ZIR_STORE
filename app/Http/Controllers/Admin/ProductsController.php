@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class ProductsController extends Controller
@@ -18,6 +19,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Product::class);
         $products = Product::with(['category', 'store'])->paginate(5);
         return view('admin.products.index', compact('products'));
     }
@@ -29,6 +31,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Product::class);
 
     }
 
@@ -40,7 +43,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('store', Product::class);
     }
 
     /**
@@ -51,7 +54,8 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $this->authorize('view', $product);
     }
 
     /**
@@ -62,8 +66,8 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-
         $product = Product::findOrFail($id);
+        $this->authorize('update', $product);
         $tags = implode(',', $product->tags()->pluck('name')->toArray());
         return view('admin.products.edit', compact('product', 'tags'));
 
@@ -78,6 +82,8 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $this->authorize('update', $product);
+
         $product->update($request->except('tags'));
         $tag_ids = [];
         $saved_tags = Tag::all();
@@ -106,6 +112,8 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $this->authorize('delete', $product);
+
     }
 }

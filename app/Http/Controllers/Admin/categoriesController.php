@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -19,6 +20,9 @@ class categoriesController extends Controller
      */
     public function index()
     {
+        if (Gate::denies('categories.view')) {
+            abort(403);
+        }
         // SELECT a.*, b.name as parent_name
         // FROM categories as a
         // LEFT JOIN categories as b ON b.id = a.parent_id
@@ -49,6 +53,9 @@ class categoriesController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows('categories.create')) {
+            abort(403);
+        }
         $parents = Category::all();
         $category = new Category();
         return view('admin.categories.create', compact('parents', 'category'));
@@ -62,6 +69,7 @@ class categoriesController extends Controller
      */
     public function store(CategoryRequest $request)
     {
+        Gate::authorize('categories.create');
 //        $clean_data = $request->validate(Category::rules(), [
 //            'name.unique' => 'This is name already exists!',
 //            'name.required' => 'This field (:attribute) is required'
@@ -88,6 +96,9 @@ class categoriesController extends Controller
      */
     public function show(Category $category)
     {
+        if (Gate::denies('categories.view')) {
+            abort(403);
+        }
         return view('admin.categories.show', compact('category'));
     }
 
@@ -99,6 +110,7 @@ class categoriesController extends Controller
      */
     public function edit($id)
     {
+        Gate::authorize('categories.update');
         $category = Category::find($id);
         if (!$category) {
             return Redirect::route('admin.categories.index')->with('info', 'Category not found!');
@@ -121,7 +133,6 @@ class categoriesController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-
         $category = Category::findOrFail($id);
         $old_image = $category->image;
         $data = $request->except('image');
@@ -136,8 +147,6 @@ class categoriesController extends Controller
         }
         //$category->fill($request->all())->save();
         return Redirect::route('admin.categories.index')->with('success', 'Category Updated');
-
-
     }
 
     /**
@@ -149,6 +158,8 @@ class categoriesController extends Controller
     public
     function destroy($id)
     {
+        Gate::authorize('categories.delete');
+
         $category = Category::findOrFail($id);
         $category->delete();
 //        if ($category->image) {
