@@ -7,8 +7,10 @@
                     @php
                         $sub= \App\Models\Category::where('parent_id',$category->id)->select('name')->get()
                     @endphp
-                    <li><a href="product-grids.html">{{$category->name}}@if($sub->isNotEmpty())<i
-                                class="lni lni-chevron-right"></i>@endif</a>
+                    <li><a href="product-grids.html">{{$category->name}}@if($sub->isNotEmpty())
+                                <i
+                                    class="lni lni-chevron-right"></i>
+                            @endif</a>
                         @if($sub->isNotEmpty())
                             <ul class="inner-sub-category">
                                 @foreach($sub as $sub_cat)
@@ -24,6 +26,7 @@
 
     <section class="hero-area">
         <div class="container">
+            <x-alert type="info"/>
             <div class="row">
                 <div class="col-lg-8 col-12 custom-padding-right">
                     <div class="slider-head">
