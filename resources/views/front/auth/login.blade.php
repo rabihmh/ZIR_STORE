@@ -55,7 +55,7 @@
 {{--        </form>--}}
 {{--    </x-auth-card>--}}
 {{--</x-guest-layout>--}}
-    -->
+-->
 <x-front-layout title="Login">
     <x-slot:breadcrumbs>
         <div class="breadcrumbs">
@@ -97,7 +97,7 @@
                             <div class="social-login">
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4 col-12">
-                                        <a class="btn facebook-btn" href="javascript:void(0)"
+                                        <a class="btn facebook-btn" href="{{route('auth.social.login.redirect','facebook')}}"
                                         ><i class="lni lni-facebook-filled"></i> Facebook
                                             login</a
                                         >
@@ -109,7 +109,7 @@
                                         >
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">
-                                        <a class="btn google-btn" href="javascript:void(0)"
+                                        <a class="btn google-btn" href="{{route('auth.social.login.redirect','google')}}"
                                         ><i class="lni lni-google"></i> Google login</a
                                         >
                                     </div>
@@ -142,10 +142,11 @@
                                     required
                                     name="password"
                                 />
-                                @if($errors->has('password')))
-                                <div class="alert alert-danger mx-auto">
-                                    {{$errors->first('password')}}
-                                </div>
+                                @if($errors->has('password'))
+                                    )
+                                    <div class="alert alert-danger mx-auto">
+                                        {{$errors->first('password')}}
+                                    </div>
                                 @endif
                             </div>
                             <div
