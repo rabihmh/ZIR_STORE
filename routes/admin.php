@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminsController;
 use App\Http\Controllers\Admin\categoriesController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ImportProductsController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RolesController;
@@ -19,7 +20,8 @@ Route::group(['middleware' => ['auth:admin'], 'as' => 'admin.', 'prefix' => 'adm
     Route::get('categories/trash', [categoriesController::class, 'trash'])->name('categories.trash');
     Route::put('categories/{category}/restore', [categoriesController::class, 'restore'])->name('categories.restore');
     Route::delete('categories/{category}/force-delete', [categoriesController::class, 'forceDelete'])->name('categories.force-delete');
-
+    Route::get('products/import', [ImportProductsController::class, 'create'])->name('products.import');
+    Route::post('products/import', [ImportProductsController::class, 'store'])->name('products.import');
     Route::resources([
         'categories' => categoriesController::class,
         'products' => ProductsController::class,
