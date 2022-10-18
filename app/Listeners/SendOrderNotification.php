@@ -31,7 +31,9 @@ class SendOrderNotification
     {
         $order = $event->order;
         $user = User::where('store_id', '=', $order->store_id)->first();
-        $user->notify(new OrderCreatedNotification($order));
+        if ($user) {
+            $user->notify(new OrderCreatedNotification($order));
+        }
 
     }
 }

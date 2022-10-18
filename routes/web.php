@@ -8,6 +8,7 @@ use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\CurrencyConverterController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductController;
+use App\Http\Controllers\Front\PaymentsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckUserType;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -35,5 +36,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])->name('auth.social.login.redirect');
 Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])->name('auth.social.login.callback');
 Route::get('auth/{provider}/user', [SocialController::class, 'index']);
+Route::get('orders/{order}/pay', [PaymentsController::class, 'create'])->name('order.payments.create');
+Route::post('orders/{order}/stripe/payment_intent', [PaymentsController::class, 'createStripePaymentIntent'])
+    ->name('stripe.paymentIntent.create');
+Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'confirm'])->name('stripe.return');
 //require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

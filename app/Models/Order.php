@@ -41,6 +41,11 @@ class Order extends Model
             ]);
     }
 
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class, 'order_id');
+    }
+
     public function addresses()
     {
         return $this->hasMany(OrderAddress::class, 'order_id', 'id');
