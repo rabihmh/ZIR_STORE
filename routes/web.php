@@ -9,6 +9,7 @@ use App\Http\Controllers\Front\CurrencyConverterController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\Front\PaymentsController;
+use App\Http\Controllers\Front\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckUserType;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -40,5 +41,6 @@ Route::get('orders/{order}/pay', [PaymentsController::class, 'create'])->name('o
 Route::post('orders/{order}/stripe/payment_intent', [PaymentsController::class, 'createStripePaymentIntent'])
     ->name('stripe.paymentIntent.create');
 Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'confirm'])->name('stripe.return');
+Route::any('stripe/webhook', [StripeWebhookController::class, 'handle']);
 //require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

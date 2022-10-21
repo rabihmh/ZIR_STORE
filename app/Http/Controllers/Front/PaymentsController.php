@@ -17,7 +17,7 @@ class PaymentsController extends Controller
 
     public function createStripePaymentIntent(Order $order)
     {
-        $amount = $order->items->sum(function ($item) {
+        $amount = $order->items->sum(function($item) {
             return $item->price * $item->quantity;
         });
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret_key'));
