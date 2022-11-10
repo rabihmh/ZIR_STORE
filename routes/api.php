@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AccessTokenController;
 use App\Http\Controllers\Api\ProductsController;
+use App\Http\Controllers\Api\DeliveriesController;
 use App\Http\Middleware\CheckApiToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('products', ProductsController::class);
 Route::post('auth/access-tokens', [AccessTokenController::class, 'store'])->middleware('guest:sanctum');
 Route::delete('auth/access-tokens/{token?}', [AccessTokenController::class, 'destroy'])->middleware('auth:sanctum');
+Route::get('deliveries/{delivery}', [DeliveriesController::class, 'show']);
+Route::put('deliveries/{delivery}', [DeliveriesController::class, 'update']);
